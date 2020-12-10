@@ -6,13 +6,17 @@ INVALID_NR_PT1 = 375054920
 
 def find_number_range(numbers: str, invalid_nr: int) -> int:
     nr_int = [int(i) for i in numbers.splitlines()]
-    numbers_len = len(nr_int)
-    for i in range(numbers_len):
-        for j in range(numbers_len):
-            pot_sum = sum(nr_int[i:j + 1])
-            if pot_sum == invalid_nr:
-                sum_min_max = min(nr_int[i:j + 1]) + max(nr_int[i:j + 1])
-                return sum_min_max
+    start = 0
+    end = 1
+    for _ in nr_int:
+        pot_sum = sum(nr_int[start:end])
+        if pot_sum < invalid_nr:
+            end += 1
+        elif pot_sum > invalid_nr:
+            start += 1
+        elif pot_sum == invalid_nr:
+            sum_min_max = min(nr_int[start:end]) + max(nr_int[start:end])
+            return sum_min_max
     else:
         raise NotImplementedError
 
